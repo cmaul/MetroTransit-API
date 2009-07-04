@@ -68,7 +68,7 @@ class MainHandler(webapp.RequestHandler):
 		</p>
 		<br /><br />
 		Developed by Corey Maul.  Very loosely based on yourmuni by mihaysa (<a href="http://yourmuni.appspot.com">http://yourmuni.appspot.com</a>)<br /><br />
-		Full source code is available at: http://www.github.com/cmaul/ 
+		Full source code is available at: <a href="http://github.com/cmaul/MetroTransit-API">http://github.com/cmaul/MetroTransit-API</a>
 	</body>
 </html>'''
 
