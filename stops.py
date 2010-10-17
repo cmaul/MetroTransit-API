@@ -62,7 +62,7 @@ class MainHandler(webapp.RequestHandler):
         stops = memcache.get(memKey)
         if stops is None:
             stops = scrapeStops(route, direction)
-            # memcache.add(memKey, stops, 60*60*24)
+            memcache.add(memKey, stops, 60*60*24)
         self.response.out.write(stops)
     except (ValueError, TypeError):
         self.response.out.write("<html><body><h4>Invalid Input</h4><p>route and direction are required inputs.<br /><i>Example: /direction?route=6&direction=4</i></p></body></html>")

@@ -56,7 +56,7 @@ class MainHandler(webapp.RequestHandler):
     routes = memcache.get("routes")
     if routes is None:
         routes = scrapeRoutes(self)
-        # memcache.add("routes", routes, 60 * 60 * 24)
+        memcache.add("routes", routes, 60 * 60 * 24)
     self.response.out.write(routes)
     
 
