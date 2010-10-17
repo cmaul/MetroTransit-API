@@ -47,6 +47,8 @@ def scrapeDirection(self) :
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
         departTable = soup.html.body.find('table','nextripDepartures')
+        if not departTable:
+            return json.dumps([])
         rows = departTable.findAll(attrs={'class':re.compile(r'\bdata\b')})
         for row in rows:
             route = row.find('span','col1').find('a')
