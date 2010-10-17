@@ -30,21 +30,23 @@ from BeautifulSoup import BeautifulSoup
 from google.appengine.api import memcache
 from django.utils import simplejson as json
 
-stopsURL = "http://nextrip.metc.state.mn.us/NextripText.aspx?route="
+stopsURL = "http://metrotransit.org/Mobile/Nextrip.aspx?route="
 
 def scrapeStops(route, direction) :
     result = urlfetch.fetch(stopsURL + route + "&direction=" + direction)
-    stops = {}
+    stops = []
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
+        select = soup.html.body.find(id="ctl00_mainContent_ddlNexTripStop")
         links = soup.html.body.findAll(attrs={"class" : "cssLink"})
-        for x in links:
-            if (x['href'][:4] != 'java'):
-                params = x['href'][1:]
-                paramsArr = params.split("&")
-                stopParam = paramsArr[4]
-                stop = stopParam.split("=")[1]
-                stops[stop] = x.string
+        options = select.findAll('option')
+        for x in options:
+            stopCode = x['value']
+            if stopCode != "0":
+                stops.append({
+                    'code': stopCode,
+                    'name': x.string
+                })
     return json.dumps(stops)
 
 
@@ -60,7 +62,7 @@ class MainHandler(webapp.RequestHandler):
         stops = memcache.get(memKey)
         if stops is None:
             stops = scrapeStops(route, direction)
-            memcache.add(memKey, stops, 60*60*24)
+            # memcache.add(memKey, stops, 60*60*24)
         self.response.out.write(stops)
     except (ValueError, TypeError):
         self.response.out.write("<html><body><h4>Invalid Input</h4><p>route and direction are required inputs.<br /><i>Example: /direction?route=6&direction=4</i></p></body></html>")

@@ -30,22 +30,24 @@ from BeautifulSoup import BeautifulSoup
 from google.appengine.api import memcache
 from django.utils import simplejson as json
 
-routeURL = "http://nextrip.metc.state.mn.us/NextripText.aspx"
+routeURL = "http://metrotransit.org/Mobile/Nextrip.aspx"
 
 def scrapeRoutes(self) :
-	result = urlfetch.fetch(routeURL)
-	if (result.status_code == 200):
-		soup = BeautifulSoup(result.content)
-		links = soup.html.body.findAll(attrs={"class" : "cssLink"})
-		pairs = {}
-		for x in links:
-			params = x['href'][1:]
-			paramsArr = params.split("&")
-			routeParam = paramsArr[0]
-			routeNum = int(routeParam.split("=")[1])
-			innerHTML = x.string
-			pairs[routeNum] = innerHTML
-	return json.dumps(pairs, sort_keys=True)
+    result = urlfetch.fetch(routeURL)
+    routes = []
+    if (result.status_code == 200):
+        soup = BeautifulSoup(result.content)
+        links = soup.html.body.findAll(attrs={"class" : "cssLink"})
+        select = soup.html.body.find(id="ctl00_mainContent_ddlNexTripRoute")
+        options = select.findAll('option')
+        for x in options:
+            routeNum = int(x['value'])
+            if routeNum > 0:
+                routes.append({
+                    'number' : routeNum,
+                    'name' : x.string
+                })
+    return json.dumps(routes, sort_keys=True)
 
 
 class MainHandler(webapp.RequestHandler):
@@ -53,8 +55,8 @@ class MainHandler(webapp.RequestHandler):
   def get(self):
     routes = memcache.get("routes")
     if routes is None:
-    	routes = scrapeRoutes(self)
-        memcache.add("routes", routes, 60 * 60 * 24)
+        routes = scrapeRoutes(self)
+        # memcache.add("routes", routes, 60 * 60 * 24)
     self.response.out.write(routes)
     
 

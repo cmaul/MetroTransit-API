@@ -31,34 +31,35 @@ from google.appengine.api import memcache
 from django.utils import simplejson as json
 import re
 
-stopsURL = "http://nextrip.metc.state.mn.us/NextripText.aspx?route="
+stopsURL = "http://metrotransit.org/Mobile/Nextrip.aspx?route="
 
 def scrapeDirection(self) :
-	
-	for key in self.request.params.keys():
-		if (key == 'route'):
-			route = self.request.get(key)
-		elif (key == 'direction'):
-			direction = self.request.get(key)
-		elif (key == 'stop'):
-			stop = self.request.get(key)
-	
-	result = urlfetch.fetch(stopsURL + route + "&direction=" + direction + "&stop=" + stop)
-	if (result.status_code == 200):
-		soup = BeautifulSoup(result.content)
-		depart = soup.html.body.find(attrs={'id':re.compile("gvNextrip$")})
-		if depart is None:
-			return json.dumps({})
-		departRows = depart.findAll("tr")
-		departures = {}
-		for x in departRows:
-			route = x.find(attrs={'id':re.compile("RouteNo$")})
-			if (route):
-				routeStr = route.string
-				depTime = x.find(attrs={'id':re.compile("Departs$")})
-				depTimeStr = depTime.string
-				departures[routeStr] = depTimeStr
-	return	json.dumps(departures)
+    for key in self.request.params.keys():
+        if (key == 'route'):
+            route = self.request.get(key)
+        elif (key == 'direction'):
+            direction = self.request.get(key)
+        elif (key == 'stop'):
+            stop = self.request.get(key)
+    
+    result = urlfetch.fetch(stopsURL + route + "&direction=" + direction + "&stop=" + stop)
+    departures = []
+    if (result.status_code == 200):
+        soup = BeautifulSoup(result.content)
+        departTable = soup.html.body.find('table','nextripDepartures')
+        rows = departTable.findAll(attrs={'class':re.compile(r'\bdata\b')})
+        for row in rows:
+            route = row.find('span','col1').find('a')
+            routeName = row.find('span', 'col2').find('a')
+            time = row.find(attrs={'class':re.compile(r'\bcol3\b')})
+            actualTime = ('red' not in time['class'].split(' '))
+            departures.append({
+                'number': route.string,
+                'name': routeName.string,
+                'time': time.string,
+                'actual': actualTime
+            })
+    return json.dumps(departures)
 
 
 class MainHandler(webapp.RequestHandler):

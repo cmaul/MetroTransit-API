@@ -32,23 +32,23 @@ from BeautifulSoup import BeautifulSoup
 from google.appengine.api import memcache
 from django.utils import simplejson as json
 
-directionURL = "http://nextrip.metc.state.mn.us/NextripText.aspx?route="
+directionURL = "http://metrotransit.org/Mobile/Nextrip.aspx?route="
 
 def scrapeDirection(self, route) :
-    pairs = {}
+    directions = []
     result = urlfetch.fetch(directionURL + route)
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
-        links = soup.html.body.findAll(attrs={"class" : "cssLink"})
-        for x in links:
-            # Exclude the javascript links (back button for now)
-            if (x['href'][:4] != 'java'):
-                params = x['href'][1:]
-                paramsArr = params.split("&")
-                dirParam = paramsArr[2]
-                directionCode = dirParam.split("=")[1]
-                pairs[directionCode] = x.string
-    return json.dumps(pairs, sort_keys=True)
+        select = soup.html.body.find(id="ctl00_mainContent_ddlNexTripDirection")
+        options = select.findAll('option')
+        for x in options:
+            directionCode = int(x['value'])
+            if directionCode > 0:
+                directions.append({
+                    'code': directionCode,
+                    'name': x.string
+                })
+    return json.dumps(directions, sort_keys=True)
 
 
 class MainHandler(webapp.RequestHandler):
@@ -61,7 +61,7 @@ class MainHandler(webapp.RequestHandler):
         directions = memcache.get(route)
         if directions is None:
             directions = scrapeDirection(self, route)
-            memcache.add(route, directions, 60*60*24);
+            # memcache.add(route, directions, 60*60*24)
         self.response.out.write(directions)
     except (ValueError, TypeError):
         self.response.out.write("<html><body><h4>Invalid Input</h4><p>route is a required input.<br /><i>Example: /direction?route=4</i></p></body></html>")
