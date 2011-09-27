@@ -1,6 +1,6 @@
 # Metro Transit API
 
-This API provides data from MetroTransit.org in a JSON encoded format.
+This API provides data from MetroTransit.org in a JSON encoded format.  Sample runs at http://metrotransitapi.appspot.com.
 
 Currently Supported Interfaces:
 
@@ -41,8 +41,7 @@ Example: *http://metrotransitapi.appspot.com/stops?route=6&direction=1*
 * direction
 
 ### Sample output:
-
-    [{"code": "OAWA", "name": "Oak St SE and Washington Ave SE"}, {"code": "4S15", "name": "4th St SE and 15th Ave SE"}, {"code": "4SCE", "name": "4th St SE and Central Ave SE"}, {"code": "1S1A", "name": "1st Ave N and 1st St"}, {"code": "7SNI", "name": "Nicollet Mall and 7th St S"}, {"code": "8SHE", "name": "Hennepin Ave and 8th St"}, ... ]
+    [{"stopOrder": 1, "code": "ONBE", "name": "Ontario St SE and Beacon St SE"}, {"stopOrder": 2, "code": "4S15", "name": "4th St SE and 15th Ave SE"}, {"stopOrder": 3, "code": "4SCE", "name": "4th St SE and Central Ave SE"}, {"stopOrder": 4, "code": "1S1A", "name": "1st Ave N and 1st St N"}, {"stopOrder": 5, "code": "7SNI", "name": "Nicollet Mall and 7th St S"}, {"stopOrder": 6, "code": "8SHE", "name": "Hennepin Ave and 8th St"}, {"stopOrder": 7, "code": "MCTC", "name": "Minneapolis Comm and Tech College"}, {"stopOrder": 8, "code": "FRHE", "name": "Hennepin Ave and Franklin Ave"}, {"stopOrder": 9, "code": "HEUP", "name": "Uptown Transit Station"}, {"stopOrder": 10, "code": "36HE", "name": "Hennepin Ave and 36th St W"}, {"stopOrder": 11, "code": "39SH", "name": "39th St and Sheridan Ave S"}, {"stopOrder": 12, "code": "50XR", "name": "Xerxes Ave and 50th St W"}, {"stopOrder": 13, "code": "50FR", "name": "France Ave and 50th St W"}, {"stopOrder": 14, "code": "VVWO", "name": "Valley View Rd and Wooddale Ave"}, {"stopOrder": 15, "code": "SODA", "name": "Southdale Transit Center"}, {"stopOrder": 16, "code": "PKGA", "name": "Gallagher Dr and Parklawn Ave"}, {"stopOrder": 17, "code": "FRMN", "name": "France Between 76th St and Minnesota Dr"}, {"stopOrder": 18, "code": "MNTC", "name": "Minnesota Dr and France Ave"}, {"stopOrder": 19, "code": "77CO", "name": "77th St W and Computer Ave"}, {"stopOrder": 20, "code": "78PI", "name": "Picture Dr and 78th St W"}]
 
 ## Nextrip
 
@@ -63,9 +62,9 @@ Example: *http://metrotransitapi.appspot.com/nextrip?route=6&direction=1&stop=HE
 
 Developed by Corey Maul. Very loosely based on yourmuni by mihaysa (http://yourmuni.appspot.com)
 
-Full source code is available at: http://www.github.com/cmaul/ 
+Full source code is available at: http://www.github.com/cmaul/MetroTransit-API/ 
 
-Copyright (c) 2009 Corey Maul
+Copyright (c) 2011 Corey Maul
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
