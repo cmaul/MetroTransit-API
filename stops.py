@@ -37,16 +37,19 @@ def scrapeStops(route, direction) :
     stops = []
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
-        select = soup.html.body.find(id="ctl00_mainContent_ddlNexTripStop")
+        select = soup.html.body.find(id="ctl00_mainContent_NexTripControl1_ddlNexTripNode")
         links = soup.html.body.findAll(attrs={"class" : "cssLink"})
         options = select.findAll('option')
+	counter = 1
         for x in options:
             stopCode = x['value']
             if stopCode != "0":
                 stops.append({
                     'code': stopCode,
-                    'name': x.string
+                    'name': x.string,
+		    'stopOrder': counter
                 })
+		counter += 1
     return json.dumps(stops)
 
 

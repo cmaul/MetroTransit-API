@@ -34,7 +34,17 @@ class MainHandler(webapp.RequestHandler):
 
   def get(self):
     defaultHtml = '''<html>
-	<body>
+    <head>
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+	    p { font-family: 'Ubuntu', sans-serif; }
+	    h1 { font-family: 'Ubuntu', sans-serif; }
+	    h2 { font-family: 'Ubuntu', sans-serif; }
+	    h3 { font-family: 'Ubuntu', sans-serif; }
+	    li { font-family: 'Ubuntu', sans-serif; }
+	</style>
+    </head>
+    <body>
     <h1 id="metro_transit_api">Metro Transit API</h1>
 
     <p>This API provides data from MetroTransit.org in a JSON encoded format.</p>
@@ -55,8 +65,8 @@ class MainHandler(webapp.RequestHandler):
 
     <h3 id="sample_output">Sample output:</h3>
 
-    <pre><code>[{"name": "55 - Hiawatha Light Rail", "number": 55}, {"name": "888 - Northstar Commuter Rail", "number": 888}, {"name": "2 - Franklin Av - Riverside Av - U of M - 8th St SE", "number": 2}, {"name": "3 - U of M - Como Av - Energy Park Dr - Maryland Av", "number": 3}, {"name": "4 - New Brighton - Johnson St - Bryant Av - Southtown", "number": 4}, {"name": "5 - Brklyn Center - Fremont - 26th Av - Chicago - MOA", "number": 5}, {"name": "6 - U of M - Hennepin - Xerxes - France - Southdale", "number": 6}, ... ]
-    </code></pre>
+    <code>[{"name": "55 - Hiawatha Light Rail", "number": 55}, {"name": "888 - Northstar Commuter Rail", "number": 888}, {"name": "2 - Franklin Av - Riverside Av - U of M - 8th St SE", "number": 2}, {"name": "3 - U of M - Como Av - Energy Park Dr - Maryland Av", "number": 3}, {"name": "4 - New Brighton - Johnson St - Bryant Av - Southtown", "number": 4}, {"name": "5 - Brklyn Center - Fremont - 26th Av - Chicago - MOA", "number": 5}, {"name": "6 - U of M - Hennepin - Xerxes - France - Southdale", "number": 6}, ... ]
+    </code>
 
     <h2 id="direction">Direction</h2>
 
@@ -86,8 +96,8 @@ class MainHandler(webapp.RequestHandler):
 
     <h3 id="sample_output">Sample output:</h3>
 
-    <pre><code>[{"code": "OAWA", "name": "Oak St SE and Washington Ave SE"}, {"code": "4S15", "name": "4th St SE and 15th Ave SE"}, {"code": "4SCE", "name": "4th St SE and Central Ave SE"}, {"code": "1S1A", "name": "1st Ave N and 1st St"}, {"code": "7SNI", "name": "Nicollet Mall and 7th St S"}, {"code": "8SHE", "name": "Hennepin Ave and 8th St"}, ... ]
-    </code></pre>
+    <code>[{"stopOrder": 1, "code": "ONBE", "name": "Ontario St SE and Beacon St SE"}, {"stopOrder": 2, "code": "4S15", "name": "4th St SE and 15th Ave SE"}, {"stopOrder": 3, "code": "4SCE", "name": "4th St SE and Central Ave SE"}, {"stopOrder": 4, "code": "1S1A", "name": "1st Ave N and 1st St N"}, {"stopOrder": 5, "code": "7SNI", "name": "Nicollet Mall and 7th St S"}, {"stopOrder": 6, "code": "8SHE", "name": "Hennepin Ave and 8th St"}, {"stopOrder": 7, "code": "MCTC", "name": "Minneapolis Comm and Tech College"}, {"stopOrder": 8, "code": "FRHE", "name": "Hennepin Ave and Franklin Ave"}, {"stopOrder": 9, "code": "HEUP", "name": "Uptown Transit Station"}, {"stopOrder": 10, "code": "36HE", "name": "Hennepin Ave and 36th St W"}, {"stopOrder": 11, "code": "39SH", "name": "39th St and Sheridan Ave S"}, {"stopOrder": 12, "code": "50XR", "name": "Xerxes Ave and 50th St W"}, {"stopOrder": 13, "code": "50FR", "name": "France Ave and 50th St W"}, {"stopOrder": 14, "code": "VVWO", "name": "Valley View Rd and Wooddale Ave"}, {"stopOrder": 15, "code": "SODA", "name": "Southdale Transit Center"}, {"stopOrder": 16, "code": "PKGA", "name": "Gallagher Dr and Parklawn Ave"}, {"stopOrder": 17, "code": "FRMN", "name": "France Between 76th St and Minnesota Dr"}, {"stopOrder": 18, "code": "MNTC", "name": "Minnesota Dr and France Ave"}, {"stopOrder": 19, "code": "77CO", "name": "77th St W and Computer Ave"}, {"stopOrder": 20, "code": "78PI", "name": "Picture Dr and 78th St W"}]
+    </code>
 
     <h2 id="nextrip">Nextrip</h2>
 
@@ -103,16 +113,16 @@ class MainHandler(webapp.RequestHandler):
 
     <h3 id="sample_output">Sample output:</h3>
 
-    <pre><code>[{"time": "9 Min", "actual": true, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "7:50", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:05", "actual": false, "number": "6D", "name": "Southdale\/France Av"}, {"time": "8:18", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:32", "actual": false, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "8:47", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}]
-    </code></pre>
+    <code>[{"time": "9 Min", "actual": true, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "7:50", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:05", "actual": false, "number": "6D", "name": "Southdale\/France Av"}, {"time": "8:18", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:32", "actual": false, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "8:47", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}]
+    </code>
 
     <h2 id="info_license">Info &amp; License</h2>
 
-    <p>Developed by Corey Maul. Very loosely based on yourmuni by mihaysa (http://yourmuni.appspot.com)</p>
+    <p>Developed by Corey Maul. Very loosely based on yourmuni by mihaysa (<a href="http://yourmuni.appspot.com">http://yourmuni.appspot.com</a>)</p>
 
-    <p>Full source code is available at: http://www.github.com/cmaul/ </p>
+    <p>Full source code is available at: <a href="http://www.github.com/cmaul/MetroTransit-API/">http://www.github.com/cmaul/MetroTransit-API</a> </p>
 
-    <p>Copyright (c) 2009 Corey Maul</p>
+    <p>Copyright (c) 2011 Corey Maul</p>
 
     <p>Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the &#8220;Software&#8221;), to deal

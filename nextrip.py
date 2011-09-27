@@ -31,7 +31,7 @@ from google.appengine.api import memcache
 from django.utils import simplejson as json
 import re
 
-stopsURL = "http://metrotransit.org/Mobile/Nextrip.aspx?route="
+stopsURL = "http://metrotransit.org/Mobile/Nextriptext.aspx?route="
 
 def scrapeDirection(self) :
     for key in self.request.params.keys():
@@ -46,7 +46,7 @@ def scrapeDirection(self) :
     departures = []
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
-        departTable = soup.html.body.find('table','nextripDepartures')
+        departTable = soup.html.body.find('div','nextripDepartures')
         if not departTable:
             return json.dumps([])
         rows = departTable.findAll(attrs={'class':re.compile(r'\bdata\b')})

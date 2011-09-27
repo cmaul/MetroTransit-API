@@ -39,7 +39,7 @@ def scrapeDirection(self, route) :
     result = urlfetch.fetch(directionURL + route)
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
-        select = soup.html.body.find(id="ctl00_mainContent_ddlNexTripDirection")
+        select = soup.html.body.find(id="ctl00_mainContent_NexTripControl1_ddlNexTripDirection")
         options = select.findAll('option')
         for x in options:
             directionCode = int(x['value'])

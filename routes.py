@@ -38,11 +38,11 @@ def scrapeRoutes(self) :
     if (result.status_code == 200):
         soup = BeautifulSoup(result.content)
         links = soup.html.body.findAll(attrs={"class" : "cssLink"})
-        select = soup.html.body.find(id="ctl00_mainContent_ddlNexTripRoute")
+        select = soup.html.body.find(id="ctl00_mainContent_NexTripControl1_ddlNexTripRoute")
         options = select.findAll('option')
         for x in options:
-            routeNum = int(x['value'])
-            if routeNum > 0:
+            routeNum = x['value']
+            if routeNum != '0':
                 routes.append({
                     'number' : routeNum,
                     'name' : x.string
