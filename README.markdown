@@ -10,6 +10,8 @@ Currently Supported Interfaces:
 * nextrip - Displays a list of times for the bus to arrive given a stop,
   direction, and route
 
+JSONP is supported using a callback parameter.
+
 ## Routes
 
 Example: *http://metrotransitapi.appspot.com/routes*
@@ -57,6 +59,14 @@ Example: *http://metrotransitapi.appspot.com/nextrip?route=6&direction=1&stop=HE
 
     [{"time": "9 Min", "actual": true, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "7:50", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:05", "actual": false, "number": "6D", "name": "Southdale\/France Av"}, {"time": "8:18", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:32", "actual": false, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "8:47", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}]
 
+
+## JSONP
+
+Example: *http://metrotransitapi.appspot.com/nextrip?route=6&direction=1&stop=HEUP&callback=handleNextrip*
+
+### Sample output:
+
+    handleNextrip([{"time": "9 Min", "actual": true, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "7:50", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, ...])
 
 ## Info & License
 
