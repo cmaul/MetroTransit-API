@@ -31,6 +31,7 @@ from google.appengine.api import urlfetch
 from BeautifulSoup import BeautifulSoup
 from google.appengine.api import memcache
 from django.utils import simplejson as json
+from jsonp import jsonp
 
 directionURL = "http://metrotransit.org/Mobile/Nextrip.aspx?route="
 
@@ -62,7 +63,7 @@ class MainHandler(webapp.RequestHandler):
         if directions is None:
             directions = scrapeDirection(self, route)
             memcache.add(route, directions, 60*60*24)
-        self.response.out.write(directions)
+        self.response.out.write(jsonp(self.request, directions))
     except (ValueError, TypeError):
         self.response.out.write("<html><body><h4>Invalid Input</h4><p>route is a required input.<br /><i>Example: /direction?route=4</i></p></body></html>")
 

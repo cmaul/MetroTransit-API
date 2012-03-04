@@ -29,6 +29,7 @@ from google.appengine.api import urlfetch
 from BeautifulSoup import BeautifulSoup
 from google.appengine.api import memcache
 from django.utils import simplejson as json
+from jsonp import jsonp
 
 routeURL = "http://metrotransit.org/Mobile/Nextrip.aspx"
 
@@ -57,7 +58,7 @@ class MainHandler(webapp.RequestHandler):
     if routes is None:
         routes = scrapeRoutes(self)
         memcache.add("routes", routes, 60 * 60 * 24)
-    self.response.out.write(routes)
+    self.response.out.write(jsonp(self.request, routes))
     
 
 def main():

@@ -29,6 +29,7 @@ from google.appengine.api import urlfetch
 from BeautifulSoup import BeautifulSoup
 from google.appengine.api import memcache
 from django.utils import simplejson as json
+from jsonp import jsonp
 import re
 
 stopsURL = "http://metrotransit.org/Mobile/Nextriptext.aspx?route="
@@ -68,7 +69,7 @@ class MainHandler(webapp.RequestHandler):
 
   def get(self):
     departures = scrapeDirection(self)
-    self.response.out.write(departures)
+    self.response.out.write(jsonp(self.request, departures))
 
 def main():
   application = webapp.WSGIApplication([('/nextrip', MainHandler)],

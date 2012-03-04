@@ -116,6 +116,15 @@ class MainHandler(webapp.RequestHandler):
     <code>[{"time": "9 Min", "actual": true, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "7:50", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:05", "actual": false, "number": "6D", "name": "Southdale\/France Av"}, {"time": "8:18", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, {"time": "8:32", "actual": false, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "8:47", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}]
     </code>
 
+    <h2>JSONP</h2>
+
+    <p>Example: <em>http://metrotransitapi.appspot.com/nextrip?route=6&amp;direction=1&amp;stop=HEUP&amp;callback=handleNextrip</em></p>
+
+    <h3>Sample output:</h3>
+
+    <pre><code>handleNextrip([{"time": "9 Min", "actual": true, "number": "6B", "name": "France Av \/Southdale \/ Via Woodale"}, {"time": "7:50", "actual": false, "number": "6E", "name": "Minn Drive \/ Xerxes Av \/ Southdale"}, ...])
+    </code></pre>
+
     <h2 id="info_license">Info &amp; License</h2>
 
     <p>Developed by Corey Maul. Very loosely based on yourmuni by mihaysa (<a href="http://yourmuni.appspot.com">http://yourmuni.appspot.com</a>)</p>
